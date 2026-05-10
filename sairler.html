@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türk Edebiyatı Şairleri</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#1a0f00;
+  --parchment:#f5ead6;
+  --parchment-dark:#e8d4ae;
+  --gold:#b8860b;
+  --gold-light:#d4a843;
+  --rust:#8b3a1a;
+  --cream:#fdf6e3;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Crimson Text', Georgia, serif;
+  min-height:100vh;
+}
+
+/* NAVBAR */
+
+nav{
+  background:var(--ink);
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 20px rgba(0,0,0,0.4);
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  justify-content:center;
+}
+
+nav ul li a{
+  display:block;
+  color:var(--parchment);
+  text-decoration:none;
+  font-family:'Crimson Text', serif;
+  font-size:1.05rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  padding:16px 36px;
+  transition:all 0.3s;
+  border-bottom:3px solid transparent;
+}
+
+nav ul li a:hover,
+nav ul li a.active{
+  color:var(--gold-light);
+  border-bottom-color:var(--gold-light);
+}
+
+/* HEADER */
+
+.page-header{
+  text-align:center;
+  padding:70px 40px 45px;
+  background:linear-gradient(180deg,#f0e0c0 0%,var(--cream) 100%);
+}
+
+.page-header h1{
+  font-family:'Playfair Display', serif;
+  font-size:clamp(2.5rem,5vw,4rem);
+  color:var(--ink);
+}
+
+.page-header h1 em{
+  color:var(--rust);
+  font-style:italic;
+}
+
+.page-header p{
+  font-family:'IM Fell English', serif;
+  font-style:italic;
+  color:var(--gold);
+  font-size:1.15rem;
+  margin-top:10px;
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  margin:24px auto;
+  max-width:500px;
+}
+
+.divider-line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+}
+
+/* CONTAINER */
+
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:20px 40px 70px;
+}
+
+/* GRID */
+
+.poet-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:35px;
+}
+
+/* CARD */
+
+.poet-card{
+  background:var(--parchment);
+  border:1px solid var(--parchment-dark);
+  overflow:hidden;
+  transition:all 0.35s;
+  box-shadow:3px 3px 20px rgba(0,0,0,0.08);
+  animation:fadeIn 0.7s ease;
+}
+
+.poet-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.14);
+}
+
+.poet-image{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  border-bottom:2px solid var(--gold);
+}
+
+.poet-content{
+  padding:28px 26px 30px;
+}
+
+.poet-name{
+  font-family:'Playfair Display', serif;
+  font-size:1.7rem;
+  color:var(--rust);
+  margin-bottom:6px;
+}
+
+.poet-years{
+  font-family:'IM Fell English', serif;
+  font-style:italic;
+  color:var(--gold);
+  margin-bottom:18px;
+  font-size:1rem;
+}
+
+.poet-text{
+  font-size:1.05rem;
+  line-height:1.8;
+  color:#2d1a08;
+  text-align:justify;
+  margin-bottom:22px;
+}
+
+.poet-quote{
+  background:#efe1c5;
+  border-left:4px solid var(--gold);
+  padding:14px 16px;
+  font-family:'IM Fell English', serif;
+  font-style:italic;
+  color:#4a2b0d;
+  line-height:1.7;
+  font-size:1rem;
+}
+
+/* FOOTER */
+
+footer{
+  background:var(--ink);
+  color:var(--parchment-dark);
+  text-align:center;
+  padding:28px 20px;
+  font-family:'Crimson Text', serif;
+  font-size:1rem;
+  letter-spacing:0.05em;
+  margin-top:40px;
+}
+
+footer span{
+  color:var(--gold-light);
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+  nav ul li a{
+    padding:14px 14px;
+    font-size:0.9rem;
+  }
+
+  .container{
+    padding:20px 20px 60px;
+  }
+
+  .poet-image{
+    height:280px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+  <ul>
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="donemler.html">Dönemler</a></li>
+    <li><a href="sairler.html" class="active">Şairler</a></li>
+  </ul>
+</nav>
+
+<!-- HEADER -->
+
+<div class="page-header">
+  <h1>Büyük <em>Şairler</em></h1>
+
+  <p>Kelimelerle çağları aşan ölümsüz sesler…</p>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span style="color:var(--gold)">◆</span>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+
+<div class="container">
+
+  <div class="poet-grid">
+
+    <!-- YUNUS EMRE -->
+    <div class="poet-card">
+      <img src="yunusemre.jpg" alt="Yunus Emre" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Yunus Emre</h2>
+        <p class="poet-years">1240 – 1321</p>
+        <p class="poet-text">
+          Türk tasavvuf edebiyatının en önemli isimlerinden biridir.
+          Sade dili ve insan sevgisini temel alan şiirleriyle halkın gönlünde
+          büyük yer edinmiştir. Hoşgörü, aşk ve Allah sevgisi eserlerinin merkezindedir.
+        </p>
+        <div class="poet-quote">
+          "Sevelim sevilelim,<br>
+          dünya kimseye kalmaz."
+        </div>
+      </div>
+    </div>
+
+    <!-- FUZULİ -->
+    <div class="poet-card">
+      <img src="fuzuli.jpg" alt="Fuzulî" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Fuzulî</h2>
+        <p class="poet-years">1483 – 1556</p>
+        <p class="poet-text">
+          Divan edebiyatının en büyük şairlerinden biri olan Fuzulî, aşk ve ıstırabı
+          derin bir lirizm ile işlemiştir. Arapça, Farsça ve Türkçe olmak üzere üç
+          dilde divan sahibidir. "Leyla vü Mecnun" mesnevisi başyapıtları arasındadır.
+        </p>
+        <div class="poet-quote">
+          "Beni candan usandırdı cefâdan yâr usanmaz mı,<br>
+          felekler yandı âhımdan murâdım şem'i yanmaz mı?"
+        </div>
+      </div>
+    </div>
+
+    <!-- BÂKÎ -->
+    <div class="poet-card">
+      <img src="baki.jpg" alt="Bâkî" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Bâkî</h2>
+        <p class="poet-years">1526 – 1600</p>
+        <p class="poet-text">
+          "Sultanü'ş-Şuarâ" (Şairler Sultanı) lakabıyla anılan Bâkî, Osmanlı divan
+          şiirinin zirvelerinden birini temsil eder. Kanuni Sultan Süleyman döneminde
+          yaşamış; şiirlerinde dünya zevklerini, geçiciliği ve aşkı ustalıkla işlemiştir.
+        </p>
+        <div class="poet-quote">
+          "Kadr-i mihr ü mah ile bilmez ki bir merd-i deni,<br>
+          Yıkılasıca saraya saltanat sürmüş yeli."
+        </div>
+      </div>
+    </div>
+
+    <!-- TEVFİK FİKRET -->
+    <div class="poet-card">
+      <img src="tevfikfikret.jpg" alt="Tevfik Fikret" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Tevfik Fikret</h2>
+        <p class="poet-years">1867 – 1915</p>
+        <p class="poet-text">
+          Servet-i Fünun edebiyatının öncü ismi olan Tevfik Fikret, şiirde biçim
+          ve içerik yeniliğinin sembolüdür. Toplumsal eleştiri ve özgürlük temaları
+          eserlerinde belirgin biçimde yer alır. "Sis" ve "Haluk'un Defteri" önemli
+          yapıtlarındandır.
+        </p>
+        <div class="poet-quote">
+          "Sarmış yine âfâkını bir dûd-i muannid,<br>
+          bir zulmet-i beyzâ ki pek sinsi, pek abit."
+        </div>
+      </div>
+    </div>
+
+    <!-- CENAP ŞAHABETTİN -->
+    <div class="poet-card">
+      <img src="cenapsahabettin.jpg" alt="Cenap Şahabettin" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Cenap Şahabettin</h2>
+        <p class="poet-years">1870 – 1934</p>
+        <p class="poet-text">
+          Servet-i Fünun akımının Tevfik Fikret ile birlikte en önemli şairidir.
+          Fransız sembolizminden derin biçimde etkilenen Cenap, müzikal ve görsel
+          dili şiire taşımıştır. Zengin dili ve yenilikçi imgelemiyle tanınır.
+        </p>
+        <div class="poet-quote">
+          "Elhan-ı Şita'da kar yağışını<br>
+          kelimelerin büyüsüyle resmeder."
+        </div>
+      </div>
+    </div>
+
+    <!-- HALİT ZİYA UŞAKLIGİL -->
+    <div class="poet-card">
+      <img src="halitziya.jpg" alt="Halit Ziya Uşaklıgil" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Halit Ziya Uşaklıgil</h2>
+        <p class="poet-years">1866 – 1945</p>
+        <p class="poet-text">
+          Türk edebiyatında modern romanın kurucusu kabul edilir. Servet-i Fünun
+          nesrinin en güçlü kalemi olan Halit Ziya, "Mai ve Siyah" ve "Aşk-ı Memnu"
+          adlı romanlarıyla Türk edebiyatına ölümsüz eserler kazandırmıştır.
+        </p>
+        <div class="poet-quote">
+          "Aşk-ı Memnu ile Türk romanına<br>
+          psikolojik derinliği getirdi."
+        </div>
+      </div>
+    </div>
+
+    <!-- ZİYA GÖKALP -->
+    <div class="poet-card">
+      <img src="ziyagokalp.jpg" alt="Ziya Gökalp" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Ziya Gökalp</h2>
+        <p class="poet-years">1876 – 1924</p>
+        <p class="poet-text">
+          Türk milliyetçiliğinin ve Türkçülük akımının ideologu olan Ziya Gökalp,
+          edebiyatı bir fikir aracı olarak kullanmıştır. Sade dil ve hece ölçüsünü
+          savunmuş; Milli Edebiyat döneminin düşünsel temellerini atmıştır.
+        </p>
+        <div class="poet-quote">
+          "Türk milletindenim, İslam ümmetindenim,<br>
+          Garp medeniyetindenim."
+        </div>
+      </div>
+    </div>
+
+    <!-- ÖMER SEYFETTİN -->
+    <div class="poet-card">
+      <img src="omerseyfettin.jpg" alt="Ömer Seyfettin" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Ömer Seyfettin</h2>
+        <p class="poet-years">1884 – 1920</p>
+        <p class="poet-text">
+          Modern Türk hikâyeciliğinin kurucusu sayılan Ömer Seyfettin, sade ve
+          akıcı Türkçesiyle halkın ruhunu yansıtan eserler kaleme almıştır.
+          Milli Edebiyat döneminin en verimli kalemi olup "Yalnız Efe", "Primo
+          Türk'ün Macerası" gibi eserleriyle tanınır.
+        </p>
+        <div class="poet-quote">
+          "Türkçeyi konuşulduğu gibi yazmak,<br>
+          en büyük sanat devrimidir."
+        </div>
+      </div>
+    </div>
+
+    <!-- ORHAN VELİ -->
+    <div class="poet-card">
+      <img src="orhanvelikanik.jpg" alt="Orhan Veli Kanık" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Orhan Veli Kanık</h2>
+        <p class="poet-years">1914 – 1950</p>
+        <p class="poet-text">
+          Garip akımının kurucularından olan Orhan Veli,
+          şiirde ölçü ve uyağı ikinci plana atarak günlük konuşma dilini öne çıkarmıştır.
+          Modern Türk şiirinin en yenilikçi şairlerinden biridir.
+        </p>
+        <div class="poet-quote">
+          "İstanbul'u dinliyorum,<br>
+          gözlerim kapalı..."
+        </div>
+      </div>
+    </div>
+
+    <!-- NAZIM HİKMET -->
+    <div class="poet-card">
+      <img src="nazimhikmet.jpg" alt="Nazım Hikmet" class="poet-image">
+      <div class="poet-content">
+        <h2 class="poet-name">Nazım Hikmet</h2>
+        <p class="poet-years">1902 – 1963</p>
+        <p class="poet-text">
+          Serbest nazımın öncüsü kabul edilen Nazım Hikmet,
+          toplumcu gerçekçi anlayışıyla Türk şiirinde büyük bir devrim yaratmıştır.
+          Şiirlerinde özgürlük, umut, aşk ve insanlık temaları öne çıkar.
+        </p>
+        <div class="poet-quote">
+          "Yaşamak bir ağaç gibi tek ve hür<br>
+          ve bir orman gibi kardeşçesine..."
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+  <span>Hazırlayan: Yağız Kızılaslan &nbsp;·&nbsp; 10/E &nbsp;·&nbsp; 1020</span>
+</footer>
+
+<audio id="arka-plan-muzigi" loop>
+  <source src="siirfon.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var muzik = document.getElementById("arka-plan-muzigi");
+
+    var kayitliSaniye = sessionStorage.getItem("muzikSaniyesi");
+    
+    if (kayitliSaniye !== null) {
+      muzik.currentTime = parseFloat(kayitliSaniye);
+    }
+
+    var playPromise = muzik.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(function(error) {
+        console.log("Otomatik oynatma engellendi, ekrana tıklama bekleniyor.");
+        document.body.addEventListener('click', function() {
+          muzik.play();
+        }, { once: true });
+      });
+    }
+
+    window.addEventListener("beforeunload", function() {
+      sessionStorage.setItem("muzikSaniyesi", muzik.currentTime);
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türk Edebiyatı Dönemleri</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#1a0f00; --parchment:#f5ead6; --parchment-dark:#e8d4ae;
+    --gold:#b8860b; --gold-light:#d4a843; --rust:#8b3a1a; --cream:#fdf6e3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--ink);font-family:'Crimson Text',Georgia,serif;min-height:100vh;}
+  nav{background:var(--ink);position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.4);}
+  nav ul{list-style:none;display:flex;justify-content:center;}
+  nav ul li a{
+    display:block;color:var(--parchment);text-decoration:none;
+    font-family:'Crimson Text',serif;font-size:1.05rem;letter-spacing:0.12em;
+    text-transform:uppercase;padding:16px 36px;transition:all 0.3s;
+    border-bottom:3px solid transparent;
+  }
+  nav ul li a:hover,nav ul li a.active{color:var(--gold-light);border-bottom-color:var(--gold-light);}
+
+  .page-header{
+    text-align:center;padding:60px 40px 40px;
+    background:linear-gradient(180deg,#f0e0c0 0%,var(--cream) 100%);
+  }
+  .page-header h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);color:var(--ink);}
+  .page-header h1 em{color:var(--rust);font-style:italic;}
+  .page-header p{font-family:'IM Fell English',serif;font-style:italic;color:var(--gold);font-size:1.1rem;margin-top:8px;}
+
+  .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:24px auto;max-width:500px;}
+  .divider-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+
+  .container{max-width:960px;margin:0 auto;padding:30px 40px 60px;}
+
+  .donem{
+    background:var(--parchment);border:1px solid var(--parchment-dark);
+    margin-bottom:40px;position:relative;
+    box-shadow:3px 3px 20px rgba(0,0,0,0.07);
+    animation:fadeIn 0.6s ease;
+  }
+  .donem-header{
+    background:var(--ink);color:var(--parchment);
+    padding:22px 36px;display:flex;align-items:center;gap:20px;
+  }
+  .donem-num{
+    font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;
+    color:var(--gold-light);opacity:0.8;line-height:1;min-width:50px;
+  }
+  .donem-title{font-family:'Playfair Display',serif;font-size:1.5rem;}
+  .donem-title small{display:block;font-family:'Crimson Text',serif;font-size:0.85rem;color:var(--gold-light);letter-spacing:0.12em;text-transform:uppercase;margin-top:3px;}
+
+  .donem-body{padding:30px 36px;}
+  .donem-body p{font-size:1.08rem;line-height:1.85;color:#2a1800;margin-bottom:14px;text-align:justify;}
+
+  .ozellikler{margin:14px 0 20px;padding-left:0;list-style:none;}
+  .ozellikler li{
+    font-size:1.05rem;line-height:1.6;color:#3a2010;
+    padding:6px 0 6px 28px;position:relative;
+    border-bottom:1px dotted var(--parchment-dark);
+  }
+  .ozellikler li::before{content:'◆';position:absolute;left:0;color:var(--gold);font-size:0.65rem;top:10px;}
+
+  .donem-footer{padding:0 36px 28px;display:flex;justify-content:flex-end;}
+  .siir-btn{
+    background:var(--ink);color:var(--parchment);border:none;
+    padding:11px 28px;font-family:'Crimson Text',serif;
+    font-size:1rem;letter-spacing:0.08em;cursor:pointer;
+    transition:all 0.3s;text-transform:uppercase;
+  }
+  .siir-btn:hover{background:var(--rust);}
+
+  /* MODAL */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;
+    background:rgba(10,5,0,0.75);z-index:500;
+    align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--parchment);max-width:560px;width:100%;
+    padding:50px 50px 40px;position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+    animation:modalIn 0.3s ease;
+    max-height:90vh;overflow-y:auto;
+  }
+  .modal::before{
+    content:'';position:absolute;top:6px;left:6px;right:-6px;bottom:-6px;
+    border:1px solid var(--gold);opacity:0.4;z-index:-1;
+  }
+  .modal-close{
+    position:absolute;top:16px;right:20px;
+    background:none;border:none;font-size:1.6rem;cursor:pointer;
+    color:var(--rust);line-height:1;font-family:'Playfair Display',serif;
+  }
+  .modal-close:hover{color:var(--ink);}
+  .modal h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--rust);margin-bottom:6px;}
+  .modal .poet{font-family:'IM Fell English',serif;font-style:italic;color:var(--gold);font-size:1rem;margin-bottom:24px;letter-spacing:0.06em;}
+  .modal .poem-text{
+    font-family:'IM Fell English',serif;font-style:italic;
+    font-size:1.12rem;line-height:2;color:var(--ink);
+    white-space:pre-line;text-align:center;
+  }
+
+  footer{background:var(--ink);color:var(--parchment-dark);text-align:center;padding:28px 20px;font-family:'Crimson Text',serif;font-size:1rem;letter-spacing:0.05em;margin-top:20px;}
+  footer span{color:var(--gold-light);}
+
+  @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+  @media(max-width:680px){
+    .donem-header{padding:18px 22px;gap:14px;}
+    .donem-body{padding:22px 22px;}
+    .donem-footer{padding:0 22px 22px;}
+    .modal{padding:36px 28px 30px;}
+    nav ul li a{padding:14px 14px;font-size:0.9rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Ana Sayfa</a></li>
+    <li><a href="donemler.html" class="active">Dönemler</a></li>
+    <li><a href="sairler.html">Şairler</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <h1>Türk Edebiyatı <em>Dönemleri</em></h1>
+  <p>Çağdan çağa akan büyük bir nehir…</p>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span style="color:var(--gold)">◆</span>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 1 -->
+  <div class="donem">
+    <div class="donem-header">
+      <div class="donem-num">I</div>
+      <div class="donem-title">
+        İslamiyet Öncesi Türk Edebiyatı
+        <small>8. yy. ve öncesi</small>
+      </div>
+    </div>
+    <div class="donem-body">
+      <p>İslamiyet'ten önce Türklerin yaşattığı bu dönem, sözlü gelenek üzerine kurulmuştur. Ozan ve kopuzun hâkim olduğu bu edebiyatta Göktürk Alfabesi ve Uygur yazısıyla kaleme alınmış metinler de yer alır.</p>
+      <ul class="ozellikler">
+        <li>Sözlü edebiyat geleneği hâkimdir; şiirler kopuz eşliğinde okunur.</li>
+        <li>Nazım birimi dörtlük, uyak düzeni genellikle aaab veya aaxa'dır.</li>
+        <li>Şiirler "sagu", "koşuk", "sav" ve "destan" türlerinde görülür.</li>
+        <li>Orhun Yazıtları (7–8. yy.) bu dönemin en önemli yazılı belgesidir.</li>
+        <li>Şamanizm, Budizm ve Maniheizm din etkisi hissedilir.</li>
+        <li>Dil sade ve yalın; Arapça-Farsça etki yoktur.</li>
+      </ul>
+    </div>
+    <div class="donem-footer">
+      <button class="siir-btn" onclick="siirGoster('donem1')">◆ Örnek Şiir Gör</button>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="donem">
+    <div class="donem-header">
+      <div class="donem-num">II</div>
+      <div class="donem-title">
+        İslamiyet Etkisindeki Türk Edebiyatı
+        <small>10. – 13. yy.</small>
+      </div>
+    </div>
+    <div class="donem-body">
+      <p>Türklerin İslamiyet'i benimsemesiyle birlikte edebiyat hem içerik hem biçim açısından köklü bir dönüşüm yaşamıştır. Arap ve Fars kültürünün etkisi güçlü biçimde hissedilmeye başlanmış, ancak Türkçe varlığını sürdürmüştür.</p>
+      <ul class="ozellikler">
+        <li>Kutadgu Bilig (1069), bu dönemin başyapıtıdır; hem siyasetnâme hem edebî eserdir.</li>
+        <li>Divan-ı Hikmet (Ahmet Yesevi) dinî-tasavvufi şiirin temelini atar.</li>
+        <li>Arapça ve Farsça sözcükler Türkçeye girmeye başlar.</li>
+        <li>Aruz ölçüsü yanında hece ölçüsü de kullanılır.</li>
+        <li>Konular: ahlak, adalet, tasavvuf ve din.</li>
+      </ul>
+    </div>
+    <div class="donem-footer">
+      <button class="siir-btn" onclick="siirGoster('donem2')">◆ Örnek Şiir Gör</button>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="donem">
+    <div class="donem-header">
+      <div class="donem-num">III</div>
+      <div class="donem-title">
+        Divan Edebiyatı
+        <small>13. – 19. yy.</small>
+      </div>
+    </div>
+    <div class="donem-body">
+      <p>Osmanlı İmparatorluğu'nun yükseliş döneminde gelişen bu edebiyat; Arap ve Fars edebiyatının biçim ve içerik anlayışını benimseyerek özgün bir sentez oluşturmuştur. Saray çevresinde gelişen bu anlayış, yüksek zümreye hitap eder.</p>
+      <ul class="ozellikler">
+        <li>Aruz ölçüsü ve Arapça-Farsça sözcük yoğunluğu belirgindir.</li>
+        <li>Gazel, kaside, mesnevi, rubaî başlıca nazım biçimleridir.</li>
+        <li>Mazmun (kalıplaşmış benzetme) sistemi şiirin temelini oluşturur.</li>
+        <li>Fuzulî, Baki, Nedim, Şeyh Galip bu dönemin büyük isimleridir.</li>
+        <li>Aşk, şarap, güzellik ve tasavvuf ana temalardır.</li>
+        <li>Divan (şiir kitabı) önemli bir tür olarak öne çıkar.</li>
+      </ul>
+    </div>
+    <div class="donem-footer">
+      <button class="siir-btn" onclick="siirGoster('donem3')">◆ Örnek Şiir Gör</button>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="donem">
+    <div class="donem-header">
+      <div class="donem-num">IV</div>
+      <div class="donem-title">
+        Halk Edebiyatı
+        <small>13. – 20. yy.</small>
+      </div>
+    </div>
+    <div class="donem-body">
+      <p>Divan edebiyatının yanı sıra halkın kalbinde filizlenen bu edebiyat; sade Türkçesiyle, hece ölçüsüyle ve saz eşliğiyle kuşaktan kuşağa aktarılan canlı bir geleneği temsil eder. Aşıklar ve ozanlar bu geleneğin taşıyıcılarıdır.</p>
+      <ul class="ozellikler">
+        <li>Hece ölçüsü ve sade, anlaşılır Türkçe kullanılır.</li>
+        <li>Koşma, semai, türkü, mani başlıca nazım biçimleridir.</li>
+        <li>Aşık tarzı ve tekke (tasavvuf) edebiyatı olmak üzere ikiye ayrılır.</li>
+        <li>Yunus Emre, Karacaoğlan, Köroğlu, Pir Sultan Abdal önemli temsilcilerdir.</li>
+        <li>Temalar: aşk, yurt özlemi, doğa, ölüm ve tanrı sevgisi.</li>
+        <li>Anonim halk edebiyatı (türküler, masallar, destanlar) da bu kapsamdadır.</li>
+      </ul>
+    </div>
+    <div class="donem-footer">
+      <button class="siir-btn" onclick="siirGoster('donem4')">◆ Örnek Şiir Gör</button>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="donem">
+    <div class="donem-header">
+      <div class="donem-num">V</div>
+      <div class="donem-title">
+        Tanzimat Edebiyatı
+        <small>1839 – 1896</small>
+      </div>
+    </div>
+    <div class="donem-body">
+      <p>1839'da ilan edilen Tanzimat Fermanı yalnızca siyasi bir dönüşüm değil, edebiyatta da tam bir yenilik hareketinin başlangıcıdır. Batı edebiyatına açılan bu dönemde roman, tiyatro ve gazete edebiyatımıza girer.</p>
+      <ul class="ozellikler">
+        <li>Roman, hikaye, tiyatro gibi Batılı türler Türk edebiyatına girer.</li>
+        <li>Namık Kemal, Şinasi, Ziya Paşa, Ahmet Mithat bu dönemin öncüleridir.</li>
+        <li>Vatan, millet, hürriyet temaları ön plana çıkar.</li>
+        <li>Dil sadeleşmeye başlar; halkın anlayabileceği bir edebiyat hedeflenir.</li>
+        <li>I. Dönem sanatı toplum için, II. Dönem sanatı sanat için anlayışıyla ayrılır.</li>
+        <li>Gazete edebiyatın yayılmasında kilit rol oynar.</li>
+      </ul>
+    </div>
+    <div class="donem-footer">
+      <button class="siir-btn" onclick="siirGoster('donem5')">◆ Örnek Şiir Gör</button>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="donem">
+    <div class="donem-header">
+      <div class="donem-num">VI</div>
+      <div class="donem-title">
+        Servet-i Fünun & Fecr-i Ati
+        <small>1896 – 1911</small>
+      </div>
+    </div>
+    <div class="donem-body">
+      <p>Servet-i Fünun (Edebiyat-ı Cedide) hareketi, Batı sanat anlayışını daha bilinçli ve sistemli biçimde Türk edebiyatına aktarır. Bireyin iç dünyası, karamsar ruh hali ve dil güzelliği ön plana çıkar.</p>
+      <ul class="ozellikler">
+        <li>Sanat sanat içindir anlayışı benimsenmiştir.</li>
+        <li>Tevfik Fikret, Cenap Şahabettin, Halit Ziya Uşaklıgil başlıca isimlerdir.</li>
+        <li>Sembolizm ve parnasizm akımlarından beslenir.</li>
+        <li>Dil ağırlaşır; Arapça-Farsça sözcük yoğunluğu artar.</li>
+        <li>Bireycilik, karamsarlık ve estetizm temel özelliklerdir.</li>
+        <li>Fecr-i Ati (1909) kısa ömürlü olup "sanat şahsi ve muhteremdir" ilkesini savunur.</li>
+      </ul>
+    </div>
+    <div class="donem-footer">
+      <button class="siir-btn" onclick="siirGoster('donem6')">◆ Örnek Şiir Gör</button>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="donem">
+    <div class="donem-header">
+      <div class="donem-num">VII</div>
+      <div class="donem-title">
+        Milli Edebiyat Dönemi
+        <small>1911 – 1923</small>
+      </div>
+    </div>
+    <div class="donem-body">
+      <p>Balkan Savaşları ve Kurtuluş Savaşı'nın gölgesinde şekillenen bu dönemde milliyetçilik duygusu edebiyatın merkezine oturur. Sade dil, milli konular ve Anadolu insanı ön plana çıkar.</p>
+      <ul class="ozellikler">
+        <li>Sade, anlaşılır Türkçe ve hece ölçüsü tercih edilir.</li>
+        <li>Ziya Gökalp, Mehmet Emin Yurdakul, Ömer Seyfettin önemli isimlerdir.</li>
+        <li>Milliyetçilik, Türkçülük ve Anadolu temaları hakimdir.</li>
+        <li>Hikaye türü bu dönemde büyük gelişim gösterir.</li>
+        <li>Milli Mücadele edebiyata yoğun biçimde yansır.</li>
+      </ul>
+    </div>
+    <div class="donem-footer">
+      <button class="siir-btn" onclick="siirGoster('donem7')">◆ Örnek Şiir Gör</button>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="donem">
+    <div class="donem-header">
+      <div class="donem-num">VIII</div>
+      <div class="donem-title">
+        Cumhuriyet Dönemi Edebiyatı
+        <small>1923 – günümüz</small>
+      </div>
+    </div>
+    <div class="donem-body">
+      <p>Cumhuriyet'in ilanıyla başlayan bu dönemde edebiyat, toplumsal değişimle iç içe geçer. Harf devrimi, dil reformu ve Batılılaşma süreciyle birlikte Türk edebiyatı son derece çeşitli bir görünüm kazanır.</p>
+      <ul class="ozellikler">
+        <li>Nazım Hikmet serbest şiiri, Orhan Veli ise "Garip" akımını başlatır.</li>
+        <li>Toplumcu gerçekçilik, varoluşçuluk ve postmodern anlayışlar görülür.</li>
+        <li>Roman, hikaye ve deneme türleri büyük gelişim gösterir.</li>
+        <li>Orhan Pamuk (2006) Nobel Edebiyat Ödülü alır.</li>
+        <li>Dil, Atatürk'ün dil devrimi ile öz Türkçeye yönelir.</li>
+        <li>Çok seslililik: feminist, Kürt, Alevi gibi farklı sesler edebiyata girer.</li>
+      </ul>
+    </div>
+    <div class="donem-footer">
+      <button class="siir-btn" onclick="siirGoster('donem8')">◆ Örnek Şiir Gör</button>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="modalKapat(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+    <h3 id="modalTitle"></h3>
+    <p class="poet" id="modalPoet"></p>
+    <div class="poem-text" id="modalPoem"></div>
+  </div>
+</div>
+
+<footer>
+  <span>Hazırlayan: Yağız Kızılaslan &nbsp;·&nbsp; 10/E &nbsp;·&nbsp; 1020</span>
+</footer>
+
+<script>
+const siirler = {
+  donem1: {
+    title: "Göktürk Dönemi — Koşuk",
+    poet: "Anonim (İslamiyet Öncesi Türk Edebiyatı)",
+    poem: `Kışlık yurt koyup yayladım,
+Kuzgun ile kağa söyleştim,
+Turna katarı ile uçtum,
+Karlı dağlara sığındım.`
+  },
+  donem2: {
+    title: "Divan-ı Hikmet'ten",
+    poet: "Ahmet Yesevi (12. yy.)",
+    poem: `Yedi yerde yedi kapı var idi,
+Her kapıda yüz yirmi dört bin er idi,
+Cümlesinin başı, gözü, yüzü var idi,
+Hak dîdârın görmek için can vereyim.`
+  },
+  donem3: {
+    title: "Gazel",
+    poet: "Fuzulî (16. yy.)",
+    poem: `Beni candan usandırdı cefâdan yâr usanmaz mı,
+Felekler yandı âhımdan murâdım şem'i yanmaz mı?
+
+Kamu bîmârına cânân deva-yı derd eder ihsan,
+Niçün kılmaz bana derman, beni bîmâr sanmaz mı?`
+  },
+  donem4: {
+    title: "Koşma",
+    poet: "Yunus Emre (13.–14. yy.)",
+    poem: `Aşkın aldı benden beni
+Bana seni gerek seni
+Ben yanarım dünü günü
+Bana seni gerek seni
+
+Ne varlığa sevinirim
+Ne yokluğa yerinirim
+Aşkın ile avunurum
+Bana seni gerek seni`
+  },
+  donem5: {
+    title: "Hürriyet Kasidesi'nden",
+    poet: "Namık Kemal (1872)",
+    poem: `Görüp ahkâm-ı asrı münharif sıdk u selâmetten,
+Çekildik izzet ü ikbâl ile bâb-ı hükümetten.
+
+Ne mümkün zulm ile bîd-âd ile imhâ-yı hürriyet,
+Çalış idrâkini kurtar, bu milletten, bu ümmetten.`
+  },
+  donem6: {
+    title: "Sis",
+    poet: "Tevfik Fikret (1902)",
+    poem: `Sarmış yine âfâkını bir dûd-i muannid,
+Bir zulmet-i beyzâ ki pek sinsi, pek abit;
+Beyninde ezelden beri mâlûf, o keder,
+Varlık gibi, yokluk gibi, sessiz, belirsiz,
+Bir hüzn-i müebbed gibi çökmüş, kımıldamaz.`
+  },
+  donem7: {
+    title: "Ben Bir Türk'üm",
+    poet: "Mehmet Emin Yurdakul (1897)",
+    poem: `Ben bir Türk'üm, dinim, cinsim uludur,
+Sinem, özüm ateş ile doludur.
+İnsan olan vatanının kuludur,
+Türk evladı evde durmaz, giderim!`
+  },
+  donem8: {
+    title: "Saat 21–22 Şiirleri'nden",
+    poet: "Nazım Hikmet (1931)",
+    poem: `En güzel deniz: henüz gidilmemiş olanıdır.
+En güzel çocuk: henüz büyümedi.
+En güzel günlerimiz: henüz yaşamadıklarımız.
+Ve sana söylemek istediğim en güzel söz:
+henüz söylememiş olduğum sözdür.`
+  }
+};
+
+function siirGoster(id) {
+  const s = siirler[id];
+  document.getElementById('modalTitle').textContent = s.title;
+  document.getElementById('modalPoet').textContent = s.poet;
+  document.getElementById('modalPoem').textContent = s.poem;
+  document.getElementById('modal').classList.add('open');
+}
+function modalKapat(e) {
+  if (e.target === document.getElementById('modal'))
+    document.getElementById('modal').classList.remove('open');
+}
+</script>
+<audio id="arka-plan-muzigi" loop>
+  <source src="siirfon.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var muzik = document.getElementById("arka-plan-muzigi");
+
+    // Tarayıcı hafızasından kalınan saniyeyi çek
+    var kayitliSaniye = sessionStorage.getItem("muzikSaniyesi");
+    
+    // Eğer önceden kaydedilmiş bir saniye varsa, müziği oradan başlat
+    if (kayitliSaniye !== null) {
+      muzik.currentTime = parseFloat(kayitliSaniye);
+    }
+
+    // Müziği otomatik başlatmayı dene
+    var playPromise = muzik.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(function(error) {
+        // Modern tarayıcılar (Chrome, Safari vb.) kullanıcı siteye tıklamadan ses çalmasına izin vermez.
+        // Eğer engellenirse, kullanıcının ekranda herhangi bir yere ilk tıklamasında müziği başlatırız.
+        console.log("Otomatik oynatma engellendi, ekrana tıklama bekleniyor.");
+        document.body.addEventListener('click', function() {
+          muzik.play();
+        }, { once: true }); // Sadece ilk tıklamada çalışır
+      });
+    }
+
+    // Kullanıcı başka bir sayfaya geçerken, müziğin o anki saniyesini hafızaya kaydet
+    window.addEventListener("beforeunload", function() {
+      sessionStorage.setItem("muzikSaniyesi", muzik.currentTime);
+    });
+  });
+</script>
+</body>
+</html>
