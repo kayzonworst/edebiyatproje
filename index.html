@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>...</title>
+    <title>Onu Özlüyorum</title>
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -38,12 +37,9 @@
                 letter-spacing 1s ease,
                 text-shadow 0.8s ease,
                 transform 1s ease;
-
-            animation: giris 2s ease;
         }
 
         @keyframes giris {
-
             0% {
                 opacity: 0;
                 transform: scale(0.8);
@@ -55,16 +51,12 @@
                 transform: scale(1);
                 filter: blur(0);
             }
-
         }
-
-        /* Hafif ekran çizgileri */
 
         body::after {
             content: "";
             position: fixed;
             inset: 0;
-
             pointer-events: none;
 
             background:
@@ -76,25 +68,16 @@
                     transparent 4px
                 );
         }
-
     </style>
 </head>
 
 <body>
 
-    <div id="yazi">
-        onu özlüyorum.
-    </div>
-
+    <div id="yazi">onu özlüyorum</div>
 
     <script>
 
         const yazi = document.getElementById("yazi");
-
-
-        /*
-        Farklı yazı stilleri
-        */
 
         const stiller = [
 
@@ -119,8 +102,7 @@
                 color: "#00ffff",
                 size: "25px",
                 spacing: "4px",
-                shadow:
-                    "3px 0 #ff003c, -3px 0 #00ffff"
+                shadow: "3px 0 #ff003c, -3px 0 #00ffff"
             },
 
             {
@@ -136,8 +118,7 @@
                 color: "#ffffff",
                 size: "27px",
                 spacing: "5px",
-                shadow:
-                    "0 0 5px white, 0 0 20px white"
+                shadow: "0 0 5px white, 0 0 20px white"
             },
 
             {
@@ -153,8 +134,7 @@
                 color: "#ffffff",
                 size: "35px",
                 spacing: "1px",
-                shadow:
-                    "4px 0 #ff0000, -4px 0 #00ffff"
+                shadow: "4px 0 #ff0000, -4px 0 #00ffff"
             },
 
             {
@@ -164,7 +144,6 @@
                 spacing: "3px",
                 shadow: "0 0 20px #4444ff"
             }
-
         ];
 
 
@@ -177,58 +156,21 @@
                     )
                 ];
 
+            yazi.style.fontFamily = stil.font;
+            yazi.style.color = stil.color;
+            yazi.style.fontSize = stil.size;
+            yazi.style.letterSpacing = stil.spacing;
+            yazi.style.textShadow = stil.shadow;
 
-            yazi.style.fontFamily =
-                stil.font;
-
-            yazi.style.color =
-                stil.color;
-
-            yazi.style.fontSize =
-                stil.size;
-
-            yazi.style.letterSpacing =
-                stil.spacing;
-
-            yazi.style.textShadow =
-                stil.shadow;
-
-
-            /*
-            Hafif rastgele hareket
-            */
-
-            const x =
-                Math.random() * 10 - 5;
-
-            const y =
-                Math.random() * 6 - 3;
+            const x = Math.random() * 10 - 5;
+            const y = Math.random() * 6 - 3;
 
             yazi.style.transform =
                 `translate(${x}px, ${y}px)`;
-
         }
 
-
-        /*
-        İlk stil
-        */
 
         stilDegistir();
-
-
-        /*
-        Her 2-3 saniyede bir değiştir
-        */
-
-        function yeniSure() {
-
-            return (
-                2000 +
-                Math.random() * 1000
-            );
-
-        }
 
 
         function dongu() {
@@ -237,15 +179,14 @@
 
             setTimeout(
                 dongu,
-                yeniSure()
+                2000 + Math.random() * 1000
             );
-
         }
 
 
         setTimeout(
             dongu,
-            yeniSure()
+            2000 + Math.random() * 1000
         );
 
     </script>
