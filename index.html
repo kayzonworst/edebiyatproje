@@ -1,33 +1,223 @@
-```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gözler yalancı sözler alaycı</title>
-
-    <style>
-        body {
-            margin: 0;
-            width: 100vw;
-            height: 100vh;
-            background: black;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 30px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türk Edebiyatı</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a0f00;
+    --parchment: #f5ead6;
+    --parchment-dark: #e8d4ae;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --rust: #8b3a1a;
+    --cream: #fdf6e3;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Crimson Text', Georgia, serif;
+    min-height: 100vh;
+  }
+  nav {
+    background: var(--ink);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  }
+  nav ul { list-style:none; display:flex; justify-content:center; }
+  nav ul li a {
+    display:block; color:var(--parchment); text-decoration:none;
+    font-family:'Crimson Text',serif; font-size:1.05rem;
+    letter-spacing:0.12em; text-transform:uppercase;
+    padding:16px 36px; transition:all 0.3s;
+    border-bottom:3px solid transparent;
+  }
+  nav ul li a:hover, nav ul li a.active {
+    color:var(--gold-light); border-bottom-color:var(--gold-light);
+  }
+  .hero {
+    text-align:center; padding:80px 40px 50px;
+    background: linear-gradient(180deg, #f5e6c8 0%, var(--cream) 100%);
+  }
+  .ornament { font-size:1.6rem; color:var(--gold); letter-spacing:0.4em; display:block; margin-bottom:20px; }
+  .hero h1 {
+    font-family:'Playfair Display',serif; font-size:clamp(3rem,6vw,5rem);
+    color:var(--ink); margin-bottom:10px; animation:slideUp 0.8s ease;
+  }
+  .hero h1 em { color:var(--rust); font-style:italic; }
+  .hero-sub {
+    font-family:'IM Fell English',serif; font-style:italic;
+    font-size:1.3rem; color:var(--gold); letter-spacing:0.08em;
+  }
+  .divider {
+    display:flex; align-items:center; justify-content:center;
+    gap:14px; margin:30px auto; max-width:500px;
+  }
+  .divider-line { flex:1; height:1px; background:linear-gradient(to right,transparent,var(--gold),transparent); }
+  .container { max-width:900px; margin:0 auto; padding:20px 40px 60px; }
+  .intro-card {
+    background:var(--parchment); border:1px solid var(--parchment-dark);
+    padding:50px 60px; position:relative;
+    box-shadow:4px 4px 30px rgba(0,0,0,0.08);
+    margin-bottom:40px;
+  }
+  .intro-card::before {
+    content:'❝'; position:absolute; top:-22px; left:50%;
+    transform:translateX(-50%); font-size:3rem; color:var(--gold);
+    background:var(--cream); padding:0 14px; line-height:1;
+  }
+  .intro-card p {
+    font-size:1.17rem; line-height:1.9; color:#2a1800;
+    margin-bottom:20px; text-align:justify;
+  }
+  .intro-card p:last-child { margin-bottom:0; }
+  .intro-card .drop-cap::first-letter {
+    font-family:'Playfair Display',serif; font-size:4.5rem; font-weight:700;
+    float:left; line-height:0.8; margin:4px 10px 0 0; color:var(--rust);
+  }
+  .highlights { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:50px; }
+  .hbox {
+    background:var(--parchment); border-top:3px solid var(--gold);
+    padding:28px 22px; text-align:center;
+    transition:transform 0.3s, box-shadow 0.3s;
+  }
+  .hbox:hover { transform:translateY(-4px); box-shadow:0 8px 24px rgba(0,0,0,0.1); }
+  .hbox .icon { font-size:2rem; display:block; margin-bottom:10px; }
+  .hbox h3 { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--rust); margin-bottom:8px; }
+  .hbox p { font-size:0.95rem; line-height:1.6; color:#4a3020; }
+  .featured-quote { text-align:center; margin:10px 0 50px; }
+  .featured-quote blockquote {
+    font-family:'IM Fell English',serif; font-style:italic;
+    font-size:1.45rem; color:var(--rust); line-height:1.7; margin-bottom:10px;
+  }
+  .featured-quote cite { color:var(--gold); font-size:1rem; letter-spacing:0.08em; }
+  .cta-row { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+  .btn {
+    display:inline-block; padding:14px 36px; text-decoration:none;
+    font-family:'Crimson Text',serif; font-size:1rem;
+    letter-spacing:0.1em; text-transform:uppercase; transition:all 0.3s;
+  }
+  .btn-primary { background:var(--ink); color:var(--parchment); border:2px solid var(--ink); }
+  .btn-primary:hover { background:var(--rust); border-color:var(--rust); }
+  .btn-secondary { background:transparent; color:var(--ink); border:2px solid var(--gold); }
+  .btn-secondary:hover { background:var(--gold); color:var(--ink); }
+  footer {
+    background:var(--ink); color:var(--parchment-dark);
+    text-align:center; padding:28px 20px;
+    font-family:'Crimson Text',serif; font-size:1rem; letter-spacing:0.05em;
+    margin-top:60px;
+  }
+  footer span { color:var(--gold-light); }
+  @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @media(max-width:700px){
+    .highlights{grid-template-columns:1fr;}
+    .intro-card{padding:36px 26px;}
+    nav ul li a{padding:14px 16px;font-size:0.9rem;}
+  }
+</style>
 </head>
-
 <body>
+<nav>
+  <ul>
+    <li><a href="index.html" class="active">Ana Sayfa</a></li>
+    <li><a href="donemler.html">Dönemler</a></li>
+    <li><a href="sairler.html">Şairler</a></li>
+  </ul>
+</nav>
 
-    gözler yalancı sözler alaycı
+<section class="hero">
+  <span class="ornament">— ✦ —</span>
+  <h1>Türk <em>Edebiyatı</em></h1>
+  <p class="hero-sub">Yüzyılların Sesi, Kelimelerin Ruhu</p>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span style="color:var(--gold)">◆</span>
+    <div class="divider-line"></div>
+  </div>
+</section>
 
+<div class="container">
+  <div class="intro-card">
+    <p class="drop-cap">Türk edebiyatı, kökleri Orta Asya steplerinden bugünün Anadolu'suna uzanan binlerce yıllık köklü bir kültürel mirastır. Sözlü gelenekten yazılı edebiyata, şiirden romana, destandan halk hikâyesine kadar geniş bir yelpazede varlığını sürdüren bu edebiyat; milletimizin ruhunu, acılarını, sevinçlerini ve özlemlerini yansıtan bir ayna gibidir.</p>
+    <p>Türk edebiyatının önemi yalnızca estetik değerinden kaynaklanmaz; aynı zamanda toplumsal belleğimizin, ortak değerlerimizin ve kimliğimizin taşıyıcısıdır. Yunus Emre'nin hoşgörü dolu dizelerinden Namık Kemal'in ateşli vatanseverliğine, Nazım Hikmet'in özgürlük haykırışından Orhan Pamuk'un derin iç sorgusuna dek her eser bir dönemi belgeler ve bir nesli şekillendirir.</p>
+    <p>Edebiyat; dili canlı tutar, kültürü gelecek kuşaklara aktarır ve bireyi hem kendisiyle hem toplumla buluşturur. Türk edebiyatını tanımak, bu topraklarda yaşamış milyonlarca insanın hislerini, düşüncelerini ve hayallerini tanımak demektir.</p>
+  </div>
+
+  <div class="highlights">
+    <div class="hbox">
+      <span class="icon">📜</span>
+      <h3>Köklü Gelenek</h3>
+      <p>Orhun Yazıtları'ndan günümüze uzanan 1300 yıllık yazılı edebiyat mirası.</p>
+    </div>
+    <div class="hbox">
+      <span class="icon">🖋️</span>
+      <h3>Zengin Çeşitlilik</h3>
+      <p>Divan, Halk, Tanzimat, Servet-i Fünun ve Cumhuriyet dönemleri.</p>
+    </div>
+    <div class="hbox">
+      <span class="icon">🌙</span>
+      <h3>Evrensel Değer</h3>
+      <p>Nobel ödüllü yazarlardan dünya klasiklerine uzanan küresel bir etki.</p>
+    </div>
+  </div>
+
+  <div class="featured-quote">
+    <div class="divider" style="margin-bottom:30px;">
+      <div class="divider-line"></div>
+      <span style="color:var(--gold)">◆</span>
+      <div class="divider-line"></div>
+    </div>
+    <blockquote>"Söz ola kese savaşı, söz ola kestire başı,<br>Söz ola ağulu aşı, yağ ile bal ede bir söz."</blockquote>
+    <cite>— Yunus Emre</cite>
+  </div>
+
+  <div class="cta-row">
+    <a href="donemler.html" class="btn btn-primary">Edebiyat Dönemlerini Keşfet</a>
+    <a href="sairler.html" class="btn btn-secondary">Büyük Şairleri Tanı</a>
+  </div>
+</div>
+
+<footer>
+  <span>Hazırlayan: Yağız Kızılaslan &nbsp;·&nbsp; 10/E &nbsp;·&nbsp; 1020</span>
+</footer>
+<audio id="arka-plan-muzigi" loop>
+  <source src="siirfon.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var muzik = document.getElementById("arka-plan-muzigi");
+
+    // Tarayıcı hafızasından kalınan saniyeyi çek
+    var kayitliSaniye = sessionStorage.getItem("muzikSaniyesi");
+    
+    // Eğer önceden kaydedilmiş bir saniye varsa, müziği oradan başlat
+    if (kayitliSaniye !== null) {
+      muzik.currentTime = parseFloat(kayitliSaniye);
+    }
+
+    // Müziği otomatik başlatmayı dene
+    var playPromise = muzik.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(function(error) {
+        // Modern tarayıcılar (Chrome, Safari vb.) kullanıcı siteye tıklamadan ses çalmasına izin vermez.
+        // Eğer engellenirse, kullanıcının ekranda herhangi bir yere ilk tıklamasında müziği başlatırız.
+        console.log("Otomatik oynatma engellendi, ekrana tıklama bekleniyor.");
+        document.body.addEventListener('click', function() {
+          muzik.play();
+        }, { once: true }); // Sadece ilk tıklamada çalışır
+      });
+    }
+
+    // Kullanıcı başka bir sayfaya geçerken, müziğin o anki saniyesini hafızaya kaydet
+    window.addEventListener("beforeunload", function() {
+      sessionStorage.setItem("muzikSaniyesi", muzik.currentTime);
+    });
+  });
+</script>
 </body>
 </html>
-```
