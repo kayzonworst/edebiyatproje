@@ -4,200 +4,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>...</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
+        body {
+            width: 100vw;
+            height: 100vh;
             background: #000;
             overflow: hidden;
-            font-family: Arial, Helvetica, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Hafif ekran titremesi */
-        body {
-            animation: ekran 8s infinite;
+        #yazi {
+            color: white;
+            font-size: 30px;
+            text-align: center;
+
+            transition:
+                color 1s ease,
+                font-family 0.5s ease,
+                font-size 1s ease,
+                letter-spacing 1s ease,
+                text-shadow 0.8s ease,
+                transform 1s ease;
+
+            animation: giris 2s ease;
         }
 
-        @keyframes ekran {
-            0%, 94%, 100% {
-                transform: translate(0);
+        @keyframes giris {
+
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+                filter: blur(10px);
             }
 
-            95% {
-                transform: translate(-2px, 1px);
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
             }
 
-            96% {
-                transform: translate(2px, -1px);
-            }
-
-            97% {
-                transform: translate(-1px, 2px);
-            }
-
-            98% {
-                transform: translate(0);
-            }
         }
 
-        /* CRT scanline efekti */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 999;
-            background: repeating-linear-gradient(
-                to bottom,
-                rgba(255,255,255,0.025) 0px,
-                rgba(255,255,255,0.025) 1px,
-                transparent 1px,
-                transparent 4px
-            );
-        }
+        /* Hafif ekran çizgileri */
 
-        /* Karanlık vignette */
         body::after {
             content: "";
             position: fixed;
             inset: 0;
-            pointer-events: none;
-            z-index: 998;
-            background: radial-gradient(
-                ellipse at center,
-                transparent 35%,
-                rgba(0,0,0,0.75) 100%
-            );
-        }
 
-        .yazi {
-            position: absolute;
-            color: #fff;
-            font-size: 22px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            white-space: nowrap;
-
-            opacity: 0;
-
-            animation:
-                belirme 5s ease-in-out forwards,
-                glitch 0.18s infinite;
-        }
-
-        /* Ana yazının belirip kaybolması */
-        @keyframes belirme {
-
-            0% {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            15% {
-                opacity: 1;
-            }
-
-            65% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-                transform: scale(1.02);
-            }
-        }
-
-        /* Yazı glitch'i */
-        @keyframes glitch {
-
-            0% {
-                text-shadow:
-                    2px 0 #ff003c,
-                    -2px 0 #00ffff;
-                transform: translate(0);
-            }
-
-            20% {
-                text-shadow:
-                    -3px 0 #ff003c,
-                    3px 0 #00ffff;
-                transform: translate(-1px, 1px);
-            }
-
-            40% {
-                text-shadow:
-                    3px 0 #ff003c,
-                    -3px 0 #00ffff;
-                transform: translate(1px, -1px);
-            }
-
-            60% {
-                text-shadow:
-                    -1px 0 #ff003c,
-                    1px 0 #00ffff;
-                transform: translate(0);
-            }
-
-            80% {
-                text-shadow:
-                    4px 0 #ff003c,
-                    -4px 0 #00ffff;
-                transform: translate(-1px, 0);
-            }
-
-            100% {
-                text-shadow:
-                    0 0 transparent;
-                transform: translate(0);
-            }
-        }
-
-        /* Glitch çizgileri */
-        .glitch-line {
-            position: fixed;
-            height: 2px;
-            background: white;
-            opacity: 0;
-            z-index: 1000;
             pointer-events: none;
 
-            animation: glitchLine 0.25s linear;
-        }
-
-        @keyframes glitchLine {
-
-            0% {
-                opacity: 0;
-                transform: translateX(0);
-            }
-
-            20% {
-                opacity: 0.8;
-                transform: translateX(-20px);
-            }
-
-            40% {
-                opacity: 0.3;
-                transform: translateX(30px);
-            }
-
-            70% {
-                opacity: 0.7;
-                transform: translateX(-10px);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateX(50px);
-            }
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    rgba(255,255,255,0.025) 0px,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px,
+                    transparent 4px
+                );
         }
 
     </style>
@@ -205,117 +82,173 @@
 
 <body>
 
-<script>
-
-const yazilar = [
-    "beni düşünüyor mu ?",
-    "beni hatırlıyor mu ?",
-    "her zaman benden kurtulmak mı istiyordu ?",
-    "onun hayatındaki yerim neydi ?",
-    "benim hakkımda konuşuyor mu ?"
-];
+    <div id="yazi">
+        yada sadece siteye girdim mi onu özlüyorum.
+    </div>
 
 
-/* Yeni yazı oluştur */
+    <script>
 
-function yeniYazi() {
-
-    const yazi = document.createElement("div");
-
-    yazi.classList.add("yazi");
-
-    yazi.innerText =
-        yazilar[Math.floor(Math.random() * yazilar.length)];
+        const yazi = document.getElementById("yazi");
 
 
-    // Rastgele konum
+        /*
+        Farklı yazı stilleri
+        */
 
-    const x = Math.random() * 78 + 5;
-    const y = Math.random() * 82 + 5;
+        const stiller = [
 
-    yazi.style.left = x + "%";
-    yazi.style.top = y + "%";
+            {
+                font: "Arial, sans-serif",
+                color: "#ffffff",
+                size: "30px",
+                spacing: "1px",
+                shadow: "0 0 10px white"
+            },
 
+            {
+                font: "Georgia, serif",
+                color: "#eeeeee",
+                size: "32px",
+                spacing: "2px",
+                shadow: "0 0 20px #ffffff"
+            },
 
-    // Rastgele boyut
+            {
+                font: "'Courier New', monospace",
+                color: "#00ffff",
+                size: "25px",
+                spacing: "4px",
+                shadow:
+                    "3px 0 #ff003c, -3px 0 #00ffff"
+            },
 
-    yazi.style.fontSize =
-        (17 + Math.random() * 10) + "px";
+            {
+                font: "Times New Roman, serif",
+                color: "#cccccc",
+                size: "34px",
+                spacing: "0px",
+                shadow: "0 0 15px #888888"
+            },
 
+            {
+                font: "Verdana, sans-serif",
+                color: "#ffffff",
+                size: "27px",
+                spacing: "5px",
+                shadow:
+                    "0 0 5px white, 0 0 20px white"
+            },
 
-    // Rastgele görünme süresi
+            {
+                font: "'Trebuchet MS', sans-serif",
+                color: "#ffaaaa",
+                size: "29px",
+                spacing: "2px",
+                shadow: "0 0 15px #ff0000"
+            },
 
-    yazi.style.animationDuration =
-        (4 + Math.random() * 4) + "s";
+            {
+                font: "Impact, sans-serif",
+                color: "#ffffff",
+                size: "35px",
+                spacing: "1px",
+                shadow:
+                    "4px 0 #ff0000, -4px 0 #00ffff"
+            },
 
+            {
+                font: "serif",
+                color: "#8888ff",
+                size: "31px",
+                spacing: "3px",
+                shadow: "0 0 20px #4444ff"
+            }
 
-    document.body.appendChild(yazi);
-
-
-    // Yazıyı sil
-
-    setTimeout(() => {
-        yazi.remove();
-    }, 8000);
-}
-
-
-/* Glitch çizgisi */
-
-function glitchCizgisi() {
-
-    const line = document.createElement("div");
-
-    line.classList.add("glitch-line");
-
-    line.style.top =
-        Math.random() * 100 + "%";
-
-    line.style.left =
-        Math.random() * 20 - 10 + "%";
-
-    line.style.width =
-        (Math.random() * 60 + 20) + "%";
-
-    document.body.appendChild(line);
-
-    setTimeout(() => {
-        line.remove();
-    }, 300);
-}
-
-
-/* İlk yazılar */
-
-for (let i = 0; i < 4; i++) {
-
-    setTimeout(
-        yeniYazi,
-        i * 1200
-    );
-
-}
-
-
-/* Sürekli yazılar */
-
-setInterval(
-    yeniYazi,
-    1800
-);
+        ];
 
 
-/* Rastgele glitch çizgileri */
+        function stilDegistir() {
 
-setInterval(() => {
+            const stil =
+                stiller[
+                    Math.floor(
+                        Math.random() * stiller.length
+                    )
+                ];
 
-    if (Math.random() > 0.35) {
-        glitchCizgisi();
-    }
 
-}, 700);
+            yazi.style.fontFamily =
+                stil.font;
 
-</script>
+            yazi.style.color =
+                stil.color;
+
+            yazi.style.fontSize =
+                stil.size;
+
+            yazi.style.letterSpacing =
+                stil.spacing;
+
+            yazi.style.textShadow =
+                stil.shadow;
+
+
+            /*
+            Hafif rastgele hareket
+            */
+
+            const x =
+                Math.random() * 10 - 5;
+
+            const y =
+                Math.random() * 6 - 3;
+
+            yazi.style.transform =
+                `translate(${x}px, ${y}px)`;
+
+        }
+
+
+        /*
+        İlk stil
+        */
+
+        stilDegistir();
+
+
+        /*
+        Her 2-3 saniyede bir değiştir
+        */
+
+        function yeniSure() {
+
+            return (
+                2000 +
+                Math.random() * 1000
+            );
+
+        }
+
+
+        function dongu() {
+
+            stilDegistir();
+
+            setTimeout(
+                dongu,
+                yeniSure()
+            );
+
+        }
+
+
+        setTimeout(
+            dongu,
+            yeniSure()
+        );
+
+    </script>
 
 </body>
 </html>
